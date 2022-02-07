@@ -1,0 +1,8 @@
+cradle:
+  cabal:
+    - path: "./app"
+      component: "exe:bf"
+    - path: "./src"
+      component: "lib:bf"
+    - path: "./test"
+      component: "test:bf-tests"

@@ -1,0 +1,82 @@
+cabal-version:          2.4
+name:                   bf
+version:                0.1.0
+synopsis:               Just-in-time Brainfuck Interpreter
+homepage:               https://github.com/kleczkowski/bf#readme
+bug-reports:            https://github.com/kleczkowski/bf/issues
+license:                MIT
+license-file:           LICENSE
+author:                 Konrad Kleczkowski
+maintainer:             Konrad Kleczkowski <konrad.kleczkowski@gmail.com>
+copyright:              2022 Konrad Kleczkowski
+category:               Language, Esoteric, LLVM
+extra-source-files:     README.md
+
+source-repository head
+  type:                 git
+  location:             git@github.com:kleczkowski/bf.git
+
+common common-options
+  build-depends:        base == 4.*
+                      , relude == 1.0.*
+  mixins:               base hiding (Prelude)
+                      , relude (Relude as Prelude)
+                      , relude
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Widentities
+                       -Wincomplete-uni-patterns
+                       -Wredundant-constraints
+  if impl(ghc >= 8.2)
+    ghc-options:       -fhide-source-paths
+  if impl(ghc >= 8.4)
+    ghc-options:       -Wmissing-export-lists
+                       -Wpartial-fields
+  if impl(ghc >= 8.8)
+    ghc-options:       -Wmissing-deriving-strategies
+  if impl(ghc >= 8.10)
+    ghc-options:       -Wunused-packages
+
+  default-language:     Haskell2010
+  default-extensions:   OverloadedStrings
+                        TupleSections
+                        LambdaCase
+                        ViewPatterns
+                        ScopedTypeVariables
+                        TypeApplications
+                        DerivingStrategies
+                        GeneralizedNewtypeDeriving
+
+library
+  import:               common-options
+  hs-source-dirs:       src
+  exposed-modules:      Bf.Syntax
+                        Bf.Compiler.Monad
+                        Bf.Compiler.Runtime
+                        Bf.Compiler.Emit
+                        Bf.Compiler.Module
+                        Bf.Compiler.Combinators
+                        Bf.Compiler
+                        Bf.Opts
+                        Bf.Main
+  build-depends:        optparse-applicative == 0.16.*
+                      , attoparsec == 0.14.*
+                      , llvm-hs == 9.0.*
+                      , llvm-hs-pure == 9.0.*
+
+executable bf
+  import:               common-options
+  hs-source-dirs:       app
+  main-is:              Main.hs
+  build-depends:        bf
+
+test-suite bf-tests
+  import:               common-options
+  type:                 exitcode-stdio-1.0
+  hs-source-dirs:       test
+  main-is:              Main.hs
+  ghc-options:          -threaded
+  other-modules:        Bf.SyntaxSpec
+  build-depends:        bf
+                      , tasty
+                      , tasty-hunit
