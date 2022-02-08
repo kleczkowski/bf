@@ -9,11 +9,11 @@ module Bf.Compiler.Combinators
 
 import Bf.Compiler.Monad
 
+import LLVM.AST.IntegerPredicate
 import LLVM.AST.Operand
+import LLVM.IRBuilder.Constant
 import LLVM.IRBuilder.Instruction
 import LLVM.IRBuilder.Monad
-import LLVM.AST.IntegerPredicate
-import LLVM.IRBuilder.Constant
 
 -- | Simply loads value under pointer.
 ld :: Operand -> Codegen r Operand

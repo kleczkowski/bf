@@ -27,9 +27,9 @@ withCodegen f = Codegen . withReaderT f . runCodegen
 {-# INLINE withCodegen #-}
 
 -- | Module builder with an environment.
-newtype Mgen r a 
-  = Mgen 
-  { runMgen :: ReaderT r ModuleBuilder a 
+newtype Mgen r a
+  = Mgen
+  { runMgen :: ReaderT r ModuleBuilder a
   }
   deriving newtype
     ( Functor

@@ -3,9 +3,9 @@ module Bf.Main
   , run
   ) where
 
+import Bf.Compiler
 import Bf.Opts
 import Bf.Syntax
-import Bf.Compiler
 
 import qualified Data.Text.IO as Text
 
@@ -15,13 +15,13 @@ main = runWithOpts run
 
 -- | Runs an interpreter with options.
 run :: Opts -> IO ()
-run opts = do 
-  inputContents <- maybe 
-    Text.getContents 
+run opts = do
+  inputContents <- maybe
+    Text.getContents
     readFileText
     (optsInput opts)
-  prog <- either 
+  prog <- either
     fail
-    pure 
+    pure
     (parseProgram inputContents)
   runCmds prog opts

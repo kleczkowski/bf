@@ -33,8 +33,8 @@ optsParserInfo = info (optsParser <**> helper) $ mconcat
 
 optsParser :: Parser Opts
 optsParser =
-  Opts 
-    <$> optional inputParser 
+  Opts
+    <$> optional inputParser
     <*> optional optLevelParser
     <*> memSize
     <*> printIR

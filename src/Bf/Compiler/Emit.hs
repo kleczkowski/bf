@@ -3,11 +3,11 @@ module Bf.Compiler.Emit
   ( compileCmds
   ) where
 
+import Bf.Compiler.Combinators
 import Bf.Compiler.Monad
 import Bf.Compiler.Runtime (Runtime)
 import qualified Bf.Compiler.Runtime as Rt
 import Bf.Syntax
-import Bf.Compiler.Combinators
 
 import LLVM.AST.Operand
 import LLVM.IRBuilder.Constant
@@ -20,7 +20,7 @@ data Memory = Memory
   , memIndex   :: !Operand
   }
   deriving stock (Eq, Show)
-    
+
 -- | Compiles the code into the sequence of LLVM IR code.
 compileCmds :: Integer -> [Cmd] -> Codegen Runtime ()
 compileCmds size = createMemory size . go
